@@ -1,0 +1,25 @@
+{
+    "name": "realtek2/laravel-multilanguage",
+    "description": "Package for easier working with multilingual  data.",
+    "authors": [
+        {
+            "name": "Maxim Paladi",
+            "email": "paladium98@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+     
+        "psr-4": {
+            "Realtek2\\LaravelMultilanguage\\": "packages/realtek/laravel-multilanguage/src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Realtek2\\LaravelMultilanguage\\LaravelMultilingualProvider"
+            ]
+        }
+    }
+}
