@@ -1,6 +1,7 @@
 {
     "name": "realtek2/laravel-multilingual",
     "description": "Package for easier working with multilingual  data.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Maxim Paladi",
@@ -9,8 +10,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.3|^8.0",
-        "ext-json": "*"
+        "php": "^7.3|^8.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.17"
