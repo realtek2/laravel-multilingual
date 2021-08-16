@@ -1,6 +1,7 @@
 {
-    "name": "realtek2/laravel-multilanguage",
+    "name": "realtek2/laravel-multilingual",
     "description": "Package for easier working with multilingual  data.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Maxim Paladi",
@@ -8,18 +9,15 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
-    "autoload": {
-     
-        "psr-4": {
-            "Realtek2\\LaravelMultilanguage\\": "packages/realtek/laravel-multilanguage/src"
-        }
+    "require": {
+        "php": "^7.3|^8.0"
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Realtek2\\LaravelMultilanguage\\LaravelMultilingualProvider"
-            ]
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.17"
+    },
+    "autoload": {
+        "psr-4": {
+            "Realtek2\\LaravelMultilanguage\\": "src"
         }
     }
 }

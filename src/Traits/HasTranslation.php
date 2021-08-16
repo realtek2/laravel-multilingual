@@ -27,7 +27,7 @@ trait HasTranslation
     public string $translateTableFK;
 
 
-    protected static function bootHasLocale()
+    protected static function bootHasTranslation()
     {
         static::addGlobalScope(new TranslationScope);
     }
