@@ -32,6 +32,15 @@ trait HasTranslation
         static::addGlobalScope(new TranslationScope);
     }
 
+    public function __construct($args)
+    {
+        parent::__construct($args);
+
+        $this->translateTable = $this->translateTable ?? "{$this->getTable()}_translation";
+        $this->translateFields = $this->translateFields ?? ['name'];
+        $this->translateTableFK = $this->translateTableFK ?? "id";
+    }
+
     /**
      * Has Many relation instance;
      *
@@ -40,7 +49,11 @@ trait HasTranslation
     public function translations(): HasMany
     {
         return $this->hasMany(get_class(new class($this->translateTable) extends Model {
-            public function __construct($table){ $this->table = $table;parent::__construct();}
+            public function __construct($table)
+            {
+                $this->table = $table;
+                parent::__construct();
+            }
         }), $this->translateTableFK);
     }
 }
