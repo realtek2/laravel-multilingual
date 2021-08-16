@@ -8,37 +8,18 @@ use Realtek2\LaravelMultilanguage\Scopes\TranslationScope;
 
 trait HasTranslation
 {
-    /**
-     * Related table for translation in Database
-     * @string
-     */
-    public string $translateTable;
-
-    /**
-     * Array of fields to be description
-     * @array
-     */
-    public array $translateFields;
-
-    /**
-     * Related FK for description in Database
-     * @string
-     */
-    public string $translateTableFK;
-
-
     protected static function bootHasTranslation()
     {
         static::addGlobalScope(new TranslationScope);
     }
 
-    public function __construct($args)
+    public function __construct()
     {
-        parent::__construct($args);
-
         $this->translateTable = $this->translateTable ?? "{$this->getTable()}_translation";
-        $this->translateFields = $this->translateFields ?? ['name'];
-        $this->translateTableFK = $this->translateTableFK ?? "id";
+        $this->translateFields = $this->translateFields ?? [];
+        $this->translateTableFK = $this->translateTableFK ?? "entity_id";
+
+        parent::__construct();
     }
 
     /**
