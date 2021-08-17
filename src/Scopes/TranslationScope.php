@@ -17,12 +17,19 @@ class TranslationScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $columns = substr_replace($model->translateFields, "{$model->translateTable}.", 0, 0);
-        array_unshift($columns, "{$model->getTable()}.*");
-
         $builder
-            ->addSelect($columns)
-            ->join($model->translateTable, "{$model->getTable()}.{$model->getKeyName()}", '=', "{$model->translateTable}.{$model->translateTableFK}", 'left')
-            ->where("{$model->translateTable}.language_code", app()->getLocale());
+            ->when(!empty($model->getTranslationFields()), function($query) use ($model) {
+                $columns = substr_replace($model->getTranslationFields(), "{$model->getTranslationTable()}.", 0, 0);
+                array_unshift($columns, "{$model->getTable()}.*");
+
+                $query
+                    ->addSelect($columns)
+                    ->join($model->getTranslationTable(), 
+                         "{$model->getTable()}.{$model->getKeyName()}", 
+                         '=', 
+                         "{$model->getTranslationTable()}.{$model->getTranslationTableFK()}", 
+                         'left')
+                    ->where("{$model->getTranslationTable()}.{$model->getTranslationLanguageFK()}", app()->getLocale());
+            });
     }
 }
