@@ -53,17 +53,17 @@ trait HasTranslation
     }
 
     /**
-     * Get translation fields values from model.
+     * Get translation fields values from model. Array of fields to be translation
      *
      * @return array
      */
     public function getTranslationFields(): array
     {
-        return [];
+        return ['name'];
     }
 
     /**
-     * Get translation table Foreign Key.
+     * Get translation table Foreign Key. Related FK for translation in Database
      *
      * @return ?string
      */
