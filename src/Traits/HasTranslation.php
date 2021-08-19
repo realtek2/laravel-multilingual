@@ -112,17 +112,17 @@ trait HasTranslation
         try {
             foreach (Language::all() as $language) {
                 if(isset($translations[$language->code])){
+
+                    $entity = [
+                        $this->getTranslationLanguageFK() => $language->code,
+                        $this->getTranslationTableFK() => $this->id
+                    ];
+
                     foreach($this->getTranslationFields() as $field){
-                        $insertValue = [
-                            $this->getTranslationLanguageFK() => $language->code, 
-                            $this->getTranslationTableFK() => $this->id,
+                        $insertValue = $entity + [
                             $field => $translations[$language->code][$field]
                         ];
     
-                        $entity = [
-                            $this->getTranslationLanguageFK() => $language->code,
-                            $this->getTranslationTableFK() => $this->id
-                        ];
                         switch ($translations[$language->code]['action']) {
                             case 'update':
                                 $this->relationshipModel::where($entity)->delete();
@@ -133,10 +133,7 @@ trait HasTranslation
                                 $this->relationshipModel::where($entity)->delete();
                                 break;
                             default:
-                                if($this->relationshipModel::where([
-                                    $this->getTranslationLanguageFK() => $language->code, 
-                                    $this->getTranslationTableFK() => $this->id
-                                ])->doesntExist()){
+                                if($this->relationshipModel::where($entity)->doesntExist()){
                                     $this->relationshipModel::insert($insertValue);
                                     break;
                                 }
