@@ -82,12 +82,12 @@ trait HasTranslation
         return self::$tnLanguageFK;
     }
 
-    public function __construct()
+    public function __construct($attributes = [])
     {
         $class = "\$this->relationshipModel = get_class(new class  extends \\Illuminate\\Database\\Eloquent\\Model {public \$table = '{$this->getTranslationTable()}';});";
         eval($class);
 
-        parent::__construct();
+        parent::__construct($attributes);
     }
 
     /**
