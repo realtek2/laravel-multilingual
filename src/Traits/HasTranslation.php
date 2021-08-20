@@ -115,30 +115,29 @@ trait HasTranslation
 
                     $entity = [
                         $this->getTranslationLanguageFK() => $language->code,
-                        $this->getTranslationTableFK() => $this->id
+                        $this->getTranslationTableFK() => $this->getKey()
                     ];
 
+                    $insertValue = $entity;
                     foreach($this->getTranslationFields() as $field){
-                        $insertValue = $entity + [
-                            $field => $translations[$language->code][$field]
-                        ];
-    
-                        switch ($translations[$language->code]['action']) {
-                            case 'update':
-                                $this->relationshipModel::where($entity)->delete();
-    
+                        $insertValue[$field] = $translations[$language->code][$field];
+                    }
+
+                    switch ($translations[$language->code]['action']) {
+                        case 'update':
+                            $this->relationshipModel::where($entity)->delete();
+
+                            $this->relationshipModel::insert($insertValue);
+                            break;
+                        case 'delete':
+                            $this->relationshipModel::where($entity)->delete();
+                            break;
+                        case 'create':
+                            if($this->relationshipModel::where($entity)->doesntExist()){
                                 $this->relationshipModel::insert($insertValue);
                                 break;
-                            case 'delete':
-                                $this->relationshipModel::where($entity)->delete();
-                                break;
-                            default:
-                                if($this->relationshipModel::where($entity)->doesntExist()){
-                                    $this->relationshipModel::insert($insertValue);
-                                    break;
-                                }
-                                break;
-                        }
+                            }
+                            break;
                     }
                 }
             }
